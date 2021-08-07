@@ -5,6 +5,7 @@ class sublib1
 {
 public:
     void print();
+    bool returnTrue();
 };
 
 #endif

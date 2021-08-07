@@ -56,16 +56,50 @@ CMAKE_BINARY_DIR = /tmp/source/919
 #=============================================================================
 # Targets provided globally by CMake.
 
-# Special rule for the target rebuild_cache
-rebuild_cache:
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running CMake to regenerate build system..."
-	/usr/bin/cmake -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
-.PHONY : rebuild_cache
+# Special rule for the target install/strip
+install/strip: preinstall
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing the project stripped..."
+	/usr/bin/cmake -DCMAKE_INSTALL_DO_STRIP=1 -P cmake_install.cmake
+.PHONY : install/strip
 
-# Special rule for the target rebuild_cache
-rebuild_cache/fast: rebuild_cache
+# Special rule for the target install/strip
+install/strip/fast: preinstall/fast
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing the project stripped..."
+	/usr/bin/cmake -DCMAKE_INSTALL_DO_STRIP=1 -P cmake_install.cmake
+.PHONY : install/strip/fast
 
-.PHONY : rebuild_cache/fast
+# Special rule for the target install/local
+install/local: preinstall
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing only the local directory..."
+	/usr/bin/cmake -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
+.PHONY : install/local
+
+# Special rule for the target install/local
+install/local/fast: preinstall/fast
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing only the local directory..."
+	/usr/bin/cmake -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
+.PHONY : install/local/fast
+
+# Special rule for the target test
+test:
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running tests..."
+	/usr/bin/ctest --force-new-ctest-process $(ARGS)
+.PHONY : test
+
+# Special rule for the target test
+test/fast: test
+
+.PHONY : test/fast
+
+# Special rule for the target list_install_components
+list_install_components:
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Available install components are: \"Unspecified\""
+.PHONY : list_install_components
+
+# Special rule for the target list_install_components
+list_install_components/fast: list_install_components
+
+.PHONY : list_install_components/fast
 
 # Special rule for the target edit_cache
 edit_cache:
@@ -77,6 +111,29 @@ edit_cache:
 edit_cache/fast: edit_cache
 
 .PHONY : edit_cache/fast
+
+# Special rule for the target rebuild_cache
+rebuild_cache:
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running CMake to regenerate build system..."
+	/usr/bin/cmake -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
+.PHONY : rebuild_cache
+
+# Special rule for the target rebuild_cache
+rebuild_cache/fast: rebuild_cache
+
+.PHONY : rebuild_cache/fast
+
+# Special rule for the target install
+install: preinstall
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Install the project..."
+	/usr/bin/cmake -P cmake_install.cmake
+.PHONY : install
+
+# Special rule for the target install
+install/fast: preinstall/fast
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Install the project..."
+	/usr/bin/cmake -P cmake_install.cmake
+.PHONY : install/fast
 
 # The main all target
 all: cmake_check_build_system
@@ -111,19 +168,19 @@ depend:
 .PHONY : depend
 
 # Convenience name for target.
-lib/CMakeFiles/lib.dir/rule:
-	cd /tmp/source/919 && $(MAKE) -f CMakeFiles/Makefile2 lib/CMakeFiles/lib.dir/rule
-.PHONY : lib/CMakeFiles/lib.dir/rule
+lib/CMakeFiles/mylibrary.dir/rule:
+	cd /tmp/source/919 && $(MAKE) -f CMakeFiles/Makefile2 lib/CMakeFiles/mylibrary.dir/rule
+.PHONY : lib/CMakeFiles/mylibrary.dir/rule
 
 # Convenience name for target.
-lib: lib/CMakeFiles/lib.dir/rule
+mylibrary: lib/CMakeFiles/mylibrary.dir/rule
 
-.PHONY : lib
+.PHONY : mylibrary
 
 # fast build rule for target.
-lib/fast:
-	cd /tmp/source/919 && $(MAKE) -f lib/CMakeFiles/lib.dir/build.make lib/CMakeFiles/lib.dir/build
-.PHONY : lib/fast
+mylibrary/fast:
+	cd /tmp/source/919 && $(MAKE) -f lib/CMakeFiles/mylibrary.dir/build.make lib/CMakeFiles/mylibrary.dir/build
+.PHONY : mylibrary/fast
 
 src/sublib1.o: src/sublib1.cpp.o
 
@@ -131,7 +188,7 @@ src/sublib1.o: src/sublib1.cpp.o
 
 # target to build an object file
 src/sublib1.cpp.o:
-	cd /tmp/source/919 && $(MAKE) -f lib/CMakeFiles/lib.dir/build.make lib/CMakeFiles/lib.dir/src/sublib1.cpp.o
+	cd /tmp/source/919 && $(MAKE) -f lib/CMakeFiles/mylibrary.dir/build.make lib/CMakeFiles/mylibrary.dir/src/sublib1.cpp.o
 .PHONY : src/sublib1.cpp.o
 
 src/sublib1.i: src/sublib1.cpp.i
@@ -140,7 +197,7 @@ src/sublib1.i: src/sublib1.cpp.i
 
 # target to preprocess a source file
 src/sublib1.cpp.i:
-	cd /tmp/source/919 && $(MAKE) -f lib/CMakeFiles/lib.dir/build.make lib/CMakeFiles/lib.dir/src/sublib1.cpp.i
+	cd /tmp/source/919 && $(MAKE) -f lib/CMakeFiles/mylibrary.dir/build.make lib/CMakeFiles/mylibrary.dir/src/sublib1.cpp.i
 .PHONY : src/sublib1.cpp.i
 
 src/sublib1.s: src/sublib1.cpp.s
@@ -149,7 +206,7 @@ src/sublib1.s: src/sublib1.cpp.s
 
 # target to generate assembly for a file
 src/sublib1.cpp.s:
-	cd /tmp/source/919 && $(MAKE) -f lib/CMakeFiles/lib.dir/build.make lib/CMakeFiles/lib.dir/src/sublib1.cpp.s
+	cd /tmp/source/919 && $(MAKE) -f lib/CMakeFiles/mylibrary.dir/build.make lib/CMakeFiles/mylibrary.dir/src/sublib1.cpp.s
 .PHONY : src/sublib1.cpp.s
 
 # Help Target
@@ -158,9 +215,14 @@ help:
 	@echo "... all (the default if no target is provided)"
 	@echo "... clean"
 	@echo "... depend"
-	@echo "... rebuild_cache"
-	@echo "... lib"
+	@echo "... install/strip"
+	@echo "... install/local"
+	@echo "... test"
+	@echo "... list_install_components"
 	@echo "... edit_cache"
+	@echo "... rebuild_cache"
+	@echo "... mylibrary"
+	@echo "... install"
 	@echo "... src/sublib1.o"
 	@echo "... src/sublib1.i"
 	@echo "... src/sublib1.s"

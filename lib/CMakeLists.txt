@@ -1,5 +1,5 @@
 # Set the project name
-project (lib)
+project (mylibrary)
 
 # Add a library with the above sources
 add_library(${PROJECT_NAME} src/sublib1.cpp)
