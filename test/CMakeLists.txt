@@ -10,8 +10,7 @@ download_project(PROJ googletest
 
 # put directory under root.
 add_subdirectory(${googletest_SOURCE_DIR} ${googletest_BINARY_DIR}) 
-add_executable(TestSample1 test_sample1.cpp)
-#target_link_libraries(TestSample1 GTest::GTest GTest::Main)
+add_executable(TestSample1 TestSublib1.cpp TestMylib1.cpp)
 target_link_libraries(TestSample1 mylibrary gtest gmock_main)
 
 # 
